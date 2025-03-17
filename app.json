@@ -1,0 +1,15 @@
+{
+    "id": "441e7dd8-b9a4-4e2c-82eb-78f0279b8136",
+    "version": "0.0.1",
+    "requiredApiVersion": "^1.44.0",
+    "iconFile": "icon.png",
+    "author": {
+        "name": "Yogesh Aggarwal",
+        "homepage": "yogeshaggarwal.in",
+        "support": "yogeshaggarwal.in"
+    },
+    "name": "HF Toolkit",
+    "nameSlug": "hf-toolkit",
+    "classFile": "HfToolkitApp.ts",
+    "description": "Huggingface toolkit"
+}
