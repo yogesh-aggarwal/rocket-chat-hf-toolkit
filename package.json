@@ -1,7 +1,7 @@
 {
     "scripts": {
         "package": "rc-apps package",
-        "deploy": "rc-apps deploy -u yogesh-aggarwal -p 12345678"
+        "deploy": "rc-apps deploy"
     },
     "devDependencies": {
         "@rocket.chat/apps-engine": "^1.44.0",
