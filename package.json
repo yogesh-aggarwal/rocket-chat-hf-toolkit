@@ -1,5 +1,6 @@
 {
     "scripts": {
+        "package": "rc-apps package",
         "deploy": "rc-apps deploy -u yogesh-aggarwal -p 12345678"
     },
     "devDependencies": {
