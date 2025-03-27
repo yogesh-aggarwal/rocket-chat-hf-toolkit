@@ -1,0 +1,6 @@
+{
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "package.json": "*.lock, *.png, README.md, .gitignore, *.json, *.yml, *.yaml, bun.lockb, .editorconfig, .rcapps*"
+    }
+}
