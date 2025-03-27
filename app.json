@@ -10,7 +10,7 @@
     },
     "name": "HF Toolkit",
     "nameSlug": "hf-toolkit",
-    "classFile": "HfToolkitApp.ts",
+    "classFile": "src/app.ts",
     "description": "Huggingface toolkit",
     "implements": []
 }

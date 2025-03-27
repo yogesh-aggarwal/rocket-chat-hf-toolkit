@@ -3,6 +3,7 @@
   "workspaces": {
     "": {
       "dependencies": {
+        "@huggingface/hub": "^1.1.2",
         "@rocket.chat/icons": "^0.38.0",
         "@rocket.chat/ui-kit": "^0.36.1",
       },
@@ -69,6 +70,10 @@
     "@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.25.1", "", { "os": "win32", "cpu": "ia32" }, "sha512-uOxSJCIcavSiT6UnBhBzE8wy3n0hOkJsBOzy7HDAuTDE++1DJMRRVCPGisULScHL+a/ZwdXPpXD3IyFKjA7K8A=="],
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.25.1", "", { "os": "win32", "cpu": "x64" }, "sha512-Y1EQdcfwMSeQN/ujR5VayLOJ1BHaK+ssyk0AEzPjC+t1lITgsnccPqFjb6V+LsTp/9Iov4ysfjxLaGJ9RPtkVg=="],
+
+    "@huggingface/hub": ["@huggingface/hub@1.1.2", "", { "dependencies": { "@huggingface/tasks": "^0.18.2" } }, "sha512-Jf4GhvVj9ABDw4Itb3BV1T7f22iewuZva476qTicQ4kOTbosuUuFDhsVH7ZH6rVNgg20Ll9kaNBF5CXjySIT+w=="],
+
+    "@huggingface/tasks": ["@huggingface/tasks@0.18.4", "", {}, "sha512-kZ8G2b6JSdVCn48VpmB2Kcb9ae16HmDRf4RWEQJMgbF98DFTt4y69fTcvQ1vi/qALRWL57pDpbzIlwWlVhY3aQ=="],
 
     "@msgpack/msgpack": ["@msgpack/msgpack@3.0.0-beta2", "", {}, "sha512-y+l1PNV0XDyY8sM3YtuMLK5vE3/hkfId+Do8pLo/OPxfxuFAUwcGz3oiiUuV46/aBpwTzZ+mRWVMtlSKbradhw=="],
 
