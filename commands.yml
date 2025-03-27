@@ -1,0 +1,349 @@
+# huggingface-cli-tool.yml
+categories:
+  auth:
+    commands:
+      - name: login
+        example: "hf-tool login --token $HF_TOKEN"
+        desc: "Authenticate with Hugging Face Hub"
+        endpoints: ["GET /api/whoami-v2"]
+      - name: logout
+        example: "hf-tool logout"
+        desc: "Clear local credentials"
+        endpoints: [] # Local operation only
+      - name: whoami
+        example: "hf-tool whoami"
+        desc: "Show current user & orgs"
+        endpoints: ["GET /api/whoami-v2"]
+      - name: validate-token
+        example: "hf-tool validate-token"
+        desc: "Check token permissions"
+        endpoints: ["GET /api/whoami-v2"]
+
+  model:
+    crud:
+      - name: upload
+        example: "hf-tool upload my-model ./model --repo-type model"
+        desc: "Upload model files"
+        endpoints: ["POST /api/repos/create", "PUT /api/repos/models/{repo_id}/settings"]
+      - name: download
+        example: "hf-tool download username/model --exclude *.bin"
+        desc: "Download model files"
+        endpoints: ["GET /api/models/{repo_id}"]
+      - name: delete
+        example: "hf-tool delete-model username/model"
+        desc: "Permanently remove model"
+        endpoints: ["DELETE /api/repos/delete"]
+      - name: move
+        example: "hf-tool move-model old-namespace/model new-namespace/model"
+        desc: "Move model to different namespace"
+        endpoints: ["POST /api/repos/move"]
+      - name: get-resource-group
+        example: "hf-tool model-get-resource-group my-model"
+        desc: "Get model's resource group details"
+        endpoints: ["GET /api/models/{namespace}/{repo}/resource-group"]
+    search:
+      - name: search
+        example: "hf-tool model-search --query 'text-classification' --author=google"
+        desc: "Search models with filters"
+        endpoints: ["GET /api/models"]
+      - name: list-tags
+        example: "hf-tool model-list-tags"
+        desc: "List all available model tags"
+        endpoints: ["GET /api/models-tags-by-type"]
+    management:
+      - name: create-version
+        example: "hf-tool model-create-version bert-base v2.0"
+        desc: "Create new model version"
+        endpoints: ["PUT /api/repos/models/{repo_id}/settings"]
+      - name: set-visibility
+        example: "hf-tool model-visibility my-model --private"
+        desc: "Change public/private status"
+        endpoints: ["PUT /api/repos/models/{repo_id}/settings"]
+      - name: add-collab
+        example: "hf-tool model-add-collab my-model @user --role write"
+        desc: "Manage collaborators"
+        endpoints: ["PUT /api/repos/models/{repo_id}/settings"]
+      - name: tag
+        example: "hf-tool model-tag my-model --add nlp,transformer --remove deprecated"
+        desc: "Manage model tags"
+        endpoints: ["PUT /api/repos/models/{repo_id}/settings"]
+      - name: set-resource-group
+        example: "hf-tool model-set-resource-group my-model --group-id 123"
+        desc: "Set model's resource group"
+        endpoints: ["POST /api/models/{namespace}/{repo}/resource-group"]
+      - name: remove-resource-group
+        example: "hf-tool model-remove-resource-group my-model"
+        desc: "Remove model's resource group"
+        endpoints: ["POST /api/models/{namespace}/{repo}/resource-group"]
+    info:
+      - name: stats
+        example: "hf-tool model-stats my-model"
+        desc: "Show downloads/likes/metrics"
+        endpoints: ["GET /api/models/{repo_id}"]
+      - name: description
+        example: "hf-tool model-readme my-model --section description"
+        desc: "Extract README content"
+        endpoints: ["GET /api/models/{repo_id}"]
+      - name: example
+        example: "hf-tool model-example my-model --format python"
+        desc: "Show usage examples"
+        endpoints: ["GET /api/models/{repo_id}"]
+      - name: get-revision
+        example: "hf-tool model-revision my-model --revision v1.0"
+        desc: "Get model info for specific revision"
+        endpoints: ["GET /api/models/{repo_id}/revision/{revision}"]
+      - name: list-files
+        example: "hf-tool model-files my-model --recursive"
+        desc: "List all files in model repo"
+        endpoints: ["GET /api/models/{repo_id}"]
+      - name: get-config
+        example: "hf-tool model-config my-model"
+        desc: "Get model configuration"
+        endpoints: ["GET /api/models/{repo_id}"]
+    inference:
+      - name: deploy
+        example: "hf-tool model-deploy my-model --type api"
+        desc: "Deploy model to inference API"
+        endpoints: ["POST /api/repos/create", "PUT /api/repos/models/{repo_id}/settings"]
+
+  dataset:
+    crud:
+      - name: upload
+        example: "hf-tool upload-dataset ./data --repo-type dataset"
+        desc: "Upload dataset files"
+        endpoints: ["POST /api/repos/create", "PUT /api/repos/datasets/{repo_id}/settings"]
+      - name: clone
+        example: "hf-tool clone-dataset username/dataset"
+        desc: "Clone dataset locally"
+        endpoints: ["GET /api/datasets/{repo_id}"]
+      - name: delete
+        example: "hf-tool delete-dataset username/dataset"
+        desc: "Permanently remove dataset"
+        endpoints: ["DELETE /api/repos/delete"]
+      - name: move
+        example: "hf-tool move-dataset old-namespace/dataset new-namespace/dataset"
+        desc: "Move dataset to different namespace"
+        endpoints: ["POST /api/repos/move"]
+      - name: get-resource-group
+        example: "hf-tool dataset-get-resource-group my-dataset"
+        desc: "Get dataset's resource group details"
+        endpoints: ["GET /api/datasets/{namespace}/{repo}/resource-group"]
+    search:
+      - name: search
+        example: "hf-tool dataset-search --task text-generation --size>100GB"
+        desc: "Filter datasets by metadata"
+        endpoints: ["GET /api/datasets"]
+      - name: list-tags
+        example: "hf-tool dataset-list-tags"
+        desc: "List all available dataset tags"
+        endpoints: ["GET /api/datasets-tags-by-type"]
+    info:
+      - name: preview
+        example: "hf-tool dataset-preview --split train --rows 5"
+        desc: "Show sample data"
+        endpoints: ["GET /api/datasets/{repo_id}"]
+      - name: stats
+        example: "hf-tool dataset-stats --columns"
+        desc: "Display size/column stats"
+        endpoints: ["GET /api/datasets/{repo_id}"]
+      - name: get-revision
+        example: "hf-tool dataset-revision my-dataset --revision v1.0"
+        desc: "Get dataset info for specific revision"
+        endpoints: ["GET /api/datasets/{repo_id}/revision/{revision}"]
+      - name: list-parquet
+        example: "hf-tool dataset-parquet my-dataset --subset train --split train"
+        desc: "List parquet files for dataset"
+        endpoints: ["GET /api/datasets/{repo_id}/parquet", "GET /api/datasets/{repo_id}/parquet/{subset}", "GET /api/datasets/{repo_id}/parquet/{subset}/{split}"]
+      - name: get-croissant
+        example: "hf-tool dataset-croissant my-dataset"
+        desc: "Get Croissant metadata"
+        endpoints: ["GET /api/datasets/{repo_id}/croissant"]
+      - name: get-parquet-shard
+        example: "hf-tool dataset-parquet-shard my-dataset --subset train --split train --shard 1"
+        desc: "Get specific parquet shard"
+        endpoints: ["GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet"]
+      - name: list-files
+        example: "hf-tool dataset-files my-dataset --recursive"
+        desc: "List all files in dataset repo"
+        endpoints: ["GET /api/datasets/{repo_id}"]
+      - name: get-config
+        example: "hf-tool dataset-config my-dataset"
+        desc: "Get dataset configuration"
+        endpoints: ["GET /api/datasets/{repo_id}"]
+    versioning:
+      - name: version
+        example: "hf-tool dataset-version my-dataset --create v2"
+        desc: "Create dataset versions"
+        endpoints: ["PUT /api/repos/datasets/{repo_id}/settings"]
+      - name: set-resource-group
+        example: "hf-tool dataset-set-resource-group my-dataset --group-id 123"
+        desc: "Set dataset's resource group"
+        endpoints: ["POST /api/datasets/{namespace}/{repo}/resource-group"]
+      - name: remove-resource-group
+        example: "hf-tool dataset-remove-resource-group my-dataset"
+        desc: "Remove dataset's resource group"
+        endpoints: ["POST /api/datasets/{namespace}/{repo}/resource-group"]
+
+  spaces:
+    crud:
+      - name: create
+        example: "hf-tool create-space my-demo --sdk gradio"
+        desc: "Create new Space"
+        endpoints: ["POST /api/repos/create", "PUT /api/repos/spaces/{repo_id}/settings"]
+      - name: delete
+        example: "hf-tool delete-space username/my-space"
+        desc: "Remove Space permanently"
+        endpoints: ["DELETE /api/repos/delete"]
+      - name: move
+        example: "hf-tool move-space old-namespace/space new-namespace/space"
+        desc: "Move space to different namespace"
+        endpoints: ["POST /api/repos/move"]
+      - name: get-resource-group
+        example: "hf-tool space-get-resource-group my-space"
+        desc: "Get space's resource group details"
+        endpoints: ["GET /api/spaces/{namespace}/{repo}/resource-group"]
+    search:
+      - name: search
+        example: "hf-tool space-search --framework streamlit --sort downloads"
+        desc: "Find Spaces by criteria"
+        endpoints: ["GET /api/spaces"]
+    info:
+      - name: logs
+        example: "hf-tool space-logs my-space --tail"
+        desc: "View runtime logs"
+        endpoints: ["GET /api/spaces/{repo_id}"]
+      - name: stats
+        example: "hf-tool space-stats my-space --metric traffic"
+        desc: "Show usage metrics"
+        endpoints: ["GET /api/spaces/{repo_id}"]
+      - name: get-revision
+        example: "hf-tool space-revision my-space --revision v1.0"
+        desc: "Get space info for specific revision"
+        endpoints: ["GET /api/spaces/{repo_id}/revision/{revision}"]
+      - name: set-resource-group
+        example: "hf-tool space-set-resource-group my-space --group-id 123"
+        desc: "Set space's resource group"
+        endpoints: ["POST /api/spaces/{namespace}/{repo}/resource-group"]
+      - name: remove-resource-group
+        example: "hf-tool space-remove-resource-group my-space"
+        desc: "Remove space's resource group"
+        endpoints: ["POST /api/spaces/{namespace}/{repo}/resource-group"]
+      - name: list-files
+        example: "hf-tool space-files my-space --recursive"
+        desc: "List all files in space repo"
+        endpoints: ["GET /api/spaces/{repo_id}"]
+      - name: get-config
+        example: "hf-tool space-config my-space"
+        desc: "Get space configuration"
+        endpoints: ["GET /api/spaces/{repo_id}"]
+
+  collections:
+    commands:
+      - name: create
+        example: "hf-tool collection-create 'My Best Models' --desc 'Curated list'"
+        desc: "Create new collection"
+        endpoints: ["POST /api/collections"]
+      - name: add
+        example: "hf-tool collection-add my-collection model1 model2"
+        desc: "Add items to collection"
+        endpoints: ["POST /api/collections/{namespace}/{slug}-{id}/item"]
+      - name: share
+        example: "hf-tool collection-share my-collection --public"
+        desc: "Manage collection visibility"
+        endpoints: ["PATCH /api/collections/{namespace}/{slug}-{id}"]
+      - name: list
+        example: "hf-tool collection-list --owner username --sort trending"
+        desc: "List collections with filters"
+        endpoints: ["GET /api/collections"]
+      - name: get
+        example: "hf-tool collection-get username/my-collection"
+        desc: "Get collection details"
+        endpoints: ["GET /api/collections/{namespace}/{slug}-{id}"]
+      - name: update
+        example: "hf-tool collection-update my-collection --title 'New Title' --theme blue"
+        desc: "Update collection metadata"
+        endpoints: ["PATCH /api/collections/{namespace}/{slug}-{id}"]
+      - name: delete
+        example: "hf-tool collection-delete my-collection"
+        desc: "Delete collection"
+        endpoints: ["DELETE /api/collections/{namespace}/{slug}-{id}"]
+      - name: update-item
+        example: "hf-tool collection-update-item my-collection item-id --position 1 --note 'Updated note'"
+        desc: "Update collection item"
+        endpoints: ["PATCH /api/collections/{namespace}/{slug}-{id}/items/{item_id}"]
+      - name: remove-item
+        example: "hf-tool collection-remove-item my-collection item-id"
+        desc: "Remove item from collection"
+        endpoints: ["DELETE /api/collections/{namespace}/{slug}-{id}/items/{item_id}"]
+
+  organizations:
+    management:
+      - name: invite
+        example: "hf-tool org-invite my-org user@email.com --role admin"
+        desc: "Invite members to org"
+        endpoints: ["POST /api/organizations/{organization_name}/members"]
+      - name: list-members
+        example: "hf-tool org-list-members my-org"
+        desc: "List organization members"
+        endpoints: ["GET /api/organizations/{organization_name}/members"]
+      - name: create-resource-group
+        example: "hf-tool org-create-resource-group my-org --name 'prod'"
+        desc: "Create resource group"
+        endpoints: ["POST /api/organizations/{name}/resource-groups"]
+      - name: list-resource-groups
+        example: "hf-tool org-list-resource-groups my-org"
+        desc: "List resource groups"
+        endpoints: ["GET /api/organizations/{name}/resource-groups"]
+      - name: get-resource-group
+        example: "hf-tool org-get-resource-group my-org group-id"
+        desc: "Get resource group details"
+        endpoints: ["GET /api/organizations/{name}/resource-groups/{resourceGroupId}"]
+      - name: update-resource-group
+        example: "hf-tool org-update-resource-group my-org group-id --name 'new-name'"
+        desc: "Update resource group"
+        endpoints: ["PATCH /api/organizations/{name}/resource-groups/{resourceGroupId}"]
+      - name: delete-resource-group
+        example: "hf-tool org-delete-resource-group my-org group-id"
+        desc: "Delete resource group"
+        endpoints: ["DELETE /api/organizations/{name}/resource-groups/{resourceGroupId}"]
+      - name: add-resource-group-users
+        example: "hf-tool org-add-resource-group-users my-org group-id --users user1,user2 --role write"
+        desc: "Add users to resource group"
+        endpoints: ["POST /api/organizations/{name}/resource-groups/{resourceGroupId}/users"]
+      - name: remove-resource-group-user
+        example: "hf-tool org-remove-resource-group-user my-org group-id username"
+        desc: "Remove user from resource group"
+        endpoints: ["DELETE /api/organizations/{name}/resource-groups/{resourceGroupId}/users/{username}"]
+      - name: update-resource-group-user
+        example: "hf-tool org-update-resource-group-user my-org group-id username --role admin"
+        desc: "Update user role in resource group"
+        endpoints: ["PATCH /api/organizations/{name}/resource-groups/{resourceGroupId}/users/{username}"]
+      - name: update-resource-group-settings
+        example: "hf-tool org-update-resource-group-settings my-org group-id --auto-join true"
+        desc: "Update resource group settings"
+        endpoints: ["POST /api/organizations/{name}/resource-groups/{resourceGroupId}/settings"]
+
+  papers:
+    commands:
+      - name: get
+        example: "hf-tool paper-get 2311.12983"
+        desc: "Get paper details"
+        endpoints: ["GET /api/papers/{arxiv_id}"]
+      - name: get-repos
+        example: "hf-tool paper-repos 2311.12983"
+        desc: "Get repositories referencing paper"
+        endpoints: ["GET /api/arxiv/{arxiv_id}/repos"]
+      - name: list-daily
+        example: "hf-tool paper-list-daily"
+        desc: "List daily curated papers"
+        endpoints: ["GET /api/daily_papers"]
+
+  system:
+    - name: cache-scan
+      example: "hf-tool scan-cache --sort size"
+      desc: "Analyze local cache"
+      endpoints: [] # Local operation only
+    - name: env-info
+      example: "hf-tool env"
+      desc: "Show Python/GPU/CUDA info"
+      endpoints: [] # Local operation only
